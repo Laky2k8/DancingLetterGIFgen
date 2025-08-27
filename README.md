@@ -24,6 +24,14 @@ The system also supports line breaks, variable GIF widths and many more. Some mo
 ![A generated GIF of dancing letters, showing off all the special characters one can use](https://github.com/user-attachments/assets/9cce8c9a-62de-48fc-92aa-f8ca3a1e5d04)
 
 <br>
+It also supports colored backgrounds and transparent GIFs! Examples:
+
+![The sentence "Color bg!!!" made up entirely of dancing letters with a cyan background.](https://github.com/user-attachments/assets/4dc793d8-8201-4790-bf99-a2020a68f081)
+
+![The sentence "Transparent bg!!!" made up entirely of dancing letters with no background.](https://github.com/user-attachments/assets/5ab89d23-b93e-465c-827e-c2f0b9644d83)
+
+
+<br>
 
 # How to use
 Just go to [The website](http://89.168.88.97:5500/) (sorry, no domain yet, working on it!) and try it out yourself!
