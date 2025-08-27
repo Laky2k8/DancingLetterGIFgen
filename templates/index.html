@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.gif') }}" type="image/gif">
+	<link rel="stylesheet" href="/static/style.css">
+	<link rel="stylesheet" href="/static/aqua-button.css">
+	<title>Dancing Letter GIF Generator</title>
+</head>
+<body>
+	<h1>Dancing Letter GIF Generator</h1>
+
+	<form id="wordForm">
+		<div class="formGroup">
+			<label for="word">Enter a word:</label>
+			<input type="text" id="word" required>
+		</div>
+		<div class="formGroup">
+			<label for="width">GIF Width:</label>
+			<input type="number" id="width" value="2000" min="100" max="5000" required>
+		</div>
+		<br>
+
+		<button type="submit" class="aqua">Generate GIF</button>
+	</form>
+
+	<div class="footer">
+		<p>GIFs made by <a href="https://www.artiestick.com/">ARG! Cartoon Animation</a>. Generator made by <a href="https://laky2k8.hu">Laky2k8</a>.</p>
+	</div>
+
+	<script>
+		document.getElementById("wordForm").addEventListener("submit", function(e) {
+			e.preventDefault(); 
+			const word = document.getElementById("word").value;
+			const width = document.getElementById("width").value;
+
+			window.location.href = "/word/" + encodeURIComponent(word) + "?width=" + encodeURIComponent(width);
+		});
+	</script>
+
+</body>
+</html>

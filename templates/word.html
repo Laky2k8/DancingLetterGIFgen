@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.gif') }}" type="image/gif">
+	<link rel="stylesheet" href="/static/style.css">
+	<link rel="stylesheet" href="/static/aqua-button.css">
+	<title>Dancing Letter GIF Generator</title>
+</head>
+<body style="overflow: hidden;">
+	<h1>Dancing Letter GIF Generator</h1>
+
+	<div class="grid-container">
+
+		<div class="grid-item">
+			<p>Separate</p>
+			<div class="scrollable-horiz">
+				{% for image in images %}
+				<img src="{{ image }}" alt="Dancing Letter GIF" style="width: 100px; height: 100px;">
+				{% endfor %}
+			</div>
+
+
+		</div>
+
+		<div class="grid-item grid-merged">
+			<p>Combined GIF</p>
+			<div class="scrollable-vert">
+				<img src="{{ merged }}" class="merged" style="height: {{ row_count * 100 }}px;">
+			</div>
+			
+		</div>
+		
+	</div>
+
+	<br>
+
+
+
+	<!-- Download link -->
+	<p>
+		<a href="{{ merged }}" download="{{ filename }}" class="aqua">
+			Download GIF
+		</a>
+	</p>
+	<br>
+	<br>
+
+	<p>
+		<a href="/"  class="aqua">
+			Generate new
+		</a>
+	</p>
+
+	<div class="footer">
+		<p>GIFs made by <a href="https://www.artiestick.com/">ARG! Cartoon Animation</a>. Generator made by <a href="https://laky2k8.hu">Laky2k8</a>.</p>
+	</div>
+</body>
+</html>
