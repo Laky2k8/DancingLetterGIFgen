@@ -4,8 +4,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.gif') }}" type="image/gif">
-	<link rel="stylesheet" href="/static/style.css">
-	<link rel="stylesheet" href="/static/aqua-button.css">
+	<link rel="stylesheet" href="/static/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/aqua-button.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/three-way-toggle.css">
+
+	<link rel="stylesheet" href="/static/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/fontawesome/css/solid.min.css" rel="stylesheet">
 	<title>Dancing Letter GIF Generator</title>
 </head>
 <body>
@@ -21,9 +25,36 @@
 			<input type="number" id="width" value="2000" min="100" max="5000" required>
 		</div>
 		<br>
+		<div class="formGroup">
+			<label for="width">Background:</label>
+			<input type="color" name="background" id="background" value="#ffffff">
+		</div>
+		<br>
+		<div class="formGroup">
+			<label for="transparent">Transparent</label>
+			<input type="checkbox" name="transparent" id="transparent">
+		</div>
+		<br>
+
+		
 
 		<button type="submit" class="aqua">Generate GIF</button>
 	</form>
+
+	<!-- Theme selector -->
+	<div class="three-toggle" role="radiogroup" aria-label="Mode">
+		<!-- IMPORTANT: inputs must be BEFORE the knob so the adjacent-sibling (~) selector works -->
+		<input type="radio" id="opt-left"  name="mode" value="left">
+		<label for="opt-left"><span class="fa-solid fa-sun"></span></label>
+	  
+		<input type="radio" id="opt-mid"   name="mode" value="middle" checked>
+		<label for="opt-mid"><span class="fa-solid fa-gears"></span></label>
+	  
+		<input type="radio" id="opt-right" name="mode" value="right">
+		<label for="opt-right"><span class="fa-solid fa-moon"></span></label>
+	  
+		<div class="three-toggle__knob" aria-hidden="true"></div>
+	  </div>
 
 	<div class="footer">
 		<p>GIFs made by <a href="https://www.artiestick.com/">ARG! Cartoon Animation</a>. Generator made by <a href="https://laky2k8.hu">Laky2k8</a>.</p>
@@ -35,9 +66,14 @@
 			const word = document.getElementById("word").value;
 			const width = document.getElementById("width").value;
 
-			window.location.href = "/word/" + encodeURIComponent(word) + "?width=" + encodeURIComponent(width);
+			const bgColor = document.getElementById("background").value;
+			const transparent = document.getElementById("transparent").checked;
+
+			window.location.href = "/word/" + encodeURIComponent(word) + "?width=" + encodeURIComponent(width) + "&bgcolor=" + encodeURIComponent(bgColor) + "&transparent=" + (transparent ? "1" : "0");
 		});
 	</script>
+
+	<script src="/static/theme-selector.js" onload="loadTheme();"></script>
 
 </body>
 </html>

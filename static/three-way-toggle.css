@@ -1,0 +1,88 @@
+:root{
+	--toggle-width: 150px;
+	--toggle-height: 44px;
+	--gap: 4px;
+	--track-bg: light-dark(#d9dce0, #2e2e2e);
+	--label-color: light-dark(#4b5563, #9ca3af);
+	--knob-bg: light-dark(#fff, #393939);
+	--accent-shadow: 0 6px 18px rgba(33,33,33,0.12);
+	--transition: 220ms cubic-bezier(.2,.9,.3,1);
+  }
+
+.three-toggle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	width: var(--toggle-width);
+	height: var(--toggle-height);
+	background: var(--track-bg);
+	border-radius: 999px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	align-items: center;
+	padding: var(--gap);
+	box-sizing: border-box;
+	gap: 0;
+	user-select: none;
+	font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+	font-size: 14px;
+  }
+  
+  /* visually hide radios but keep them focusable */
+  .three-toggle input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+  }
+  
+  /* labels sit on top and are clickable */
+  .three-toggle label {
+	position: relative;
+	z-index: 2;
+	text-align: center;
+	cursor: pointer;
+	padding: 6px 8px;
+	color: var(--label-color);
+	transition: color var(--transition);
+	pointer-events: auto;
+  }
+  
+  /* knob (the sliding selector) */
+  .three-toggle__knob {
+	position: absolute;
+	top: var(--gap);
+	left: var(--gap);
+	height: calc(100% - (var(--gap) * 2));
+	width: calc( (100% / 3) - (var(--gap) * 2) );
+	border-radius: 999px;
+	background: var(--knob-bg);
+	z-index: 1;
+	box-shadow: var(--accent-shadow);
+	transition: transform var(--transition), width var(--transition);
+  }
+  
+  /* Move the knob depending on which radio is checked */
+  #opt-left:checked  ~ .three-toggle__knob { transform: translateX(0%); }
+  #opt-mid:checked   ~ .three-toggle__knob { transform: translateX(115%); }
+  #opt-right:checked ~ .three-toggle__knob { transform: translateX(230%); }
+  
+  /* Visually emphasize the active label */
+  #opt-left:checked  ~ label[for="opt-left"],
+  #opt-mid:checked   ~ label[for="opt-mid"],
+  #opt-right:checked ~ label[for="opt-right"] {
+	color: light-dark(#0b1220, #e6e9ee);
+	font-weight: 600;
+  }
+  
+  /* keyboard focus styling (focus the associated label) */
+  .three-toggle input[type="radio"]:focus + label {
+	/*box-shadow: 0 0 0 4px rgba(59,130,246,0.12);
+	border-radius: 6px;*/
+  }
+  
+  /* Responsive tweak: narrower width */
+  @media (max-width: 360px) {
+	:root { --toggle-width: 220px; --toggle-height: 40px; }
+  }

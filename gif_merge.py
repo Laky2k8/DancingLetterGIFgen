@@ -1,6 +1,6 @@
 from PIL import Image, ImageSequence
 
-def merge_gif_frames(gif_paths, max_width=None):
+def merge_gif_frames(gif_paths, max_width=None, bg_color=(255, 255, 255, 255)):
 	"""Merge GIFs with wrapping: place them in rows, wrapping to a new line if max_width is exceeded."""
 	gifs_data = []
 	gif_size = 100
@@ -12,7 +12,7 @@ def merge_gif_frames(gif_paths, max_width=None):
 
 
 		if "space" in path.lower():
-			white_frame = Image.new('RGBA', (100, 100), (255, 255, 255, 255))
+			white_frame = Image.new('RGBA', (100, 100), bg_color)
 			frames = [white_frame] * 10
 			durations = [100] * 10
 		elif "newline" in path.lower():
@@ -20,7 +20,7 @@ def merge_gif_frames(gif_paths, max_width=None):
 			newline = True
 
 			# Dummy fames so the loop works lmao
-			dummy_frame = Image.new('RGBA', (100, 100), (255, 255, 255, 255))
+			dummy_frame = Image.new('RGBA', (100, 100), bg_color)
 			frames = [dummy_frame] * 10
 			durations = [100] * 10
 
@@ -29,7 +29,7 @@ def merge_gif_frames(gif_paths, max_width=None):
 			im = Image.open(path)
 			for frame in ImageSequence.Iterator(im):
 				frame = frame.convert('RGBA')
-				bg = Image.new('RGBA', frame.size, (255, 255, 255, 255))
+				bg = Image.new('RGBA', frame.size, bg_color)
 				bg.paste(frame, (0, 0), frame)
 				frames.append(bg)
 				durations.append(frame.info.get('duration', 100))
@@ -91,12 +91,12 @@ def merge_gif_frames(gif_paths, max_width=None):
 
 		# If we have no rows (that shouldn't happen lol) just make an empty row
 		if not rows:
-			rows = [[Image.new('RGBA', (1, target_height), (255, 255, 255, 255))]]
+			rows = [[Image.new('RGBA', (1, target_height), bg_color)]]
 
 		total_width = max(sum(f.width for f in row) for row in rows)
 		total_height = len(rows) * target_height
 
-		merged = Image.new('RGBA', (total_width, total_height), (255, 255, 255, 255))
+		merged = Image.new('RGBA', (total_width, total_height), bg_color)
 		y_offset = 0
 		for row in rows:
 			x_offset = 0

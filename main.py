@@ -4,6 +4,7 @@ from unidecode import unidecode
 import gif_merge
 from gif_merge import merge_gif_frames
 import base64
+from PIL import ImageColor
 
 app = Flask(__name__)
 
@@ -30,6 +31,42 @@ def generate_dancing_gif(word):
 	else:
 		# Default width
 		width = 2000
+
+	# Get background color
+	bgColor = request.args.get("bgcolor")
+	if bgColor:
+		try:
+			# Replace %23 with #
+			bgColor = bgColor.replace("%23", "#")
+
+			print(bgColor)
+
+			if not bgColor.startswith("#") or len(bgColor) not in [4, 7]:
+				return "Invalid bgcolor parameter (hex code incorrect)", 400
+		except ValueError:
+			return "Invalid bgcolor parameter", 400
+	else:
+		# Default background color
+		bgColor = "#FFFFFF"
+
+	# Is transparent
+	transparentParam = request.args.get("transparent")
+	try:
+		if transparentParam and int(transparentParam) == 1:
+			bgColor = None
+	except ValueError:
+		return "Invalid transparent parameter", 400
+
+	print(bgColor)
+
+	# Convert BG color to RGBA
+	if bgColor:
+		bgColorRGBA = ImageColor.getcolor(bgColor, "RGBA")
+		print(bgColorRGBA)
+	else:
+		# Transparent
+		bgColorRGBA = (255, 255, 255, 0)
+		print("Transparent BG")
 
 	word_ascii = unidecode(word)
 
@@ -96,7 +133,7 @@ def generate_dancing_gif(word):
 	try:
 		merged_path = None
 		if gif_paths:
-			merged_frames, merged_durations, total_rows = merge_gif_frames(gif_paths, max_width=width)
+			merged_frames, merged_durations, total_rows = merge_gif_frames(gif_paths, max_width=width, bg_color=bgColorRGBA)
 
 			merged_filename = f"{word}.gif"
 			# Clean merged_filename from special characters

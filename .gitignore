@@ -78,3 +78,7 @@ venv.bak/
 dancing_letter_gifs/
 
 downloader.py
+
+.devlog/
+
+static/fontawesome/
