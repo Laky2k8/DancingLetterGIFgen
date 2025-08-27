@@ -47,6 +47,8 @@ Special characters:
 - `?` → `dancing_question.gif`
 - `!` → `dancing_exclamation.gif`
 
+You also need to add the CSS+Webfont version of Font Awesome in static since I'm not sure if I'd be allowed to redistribute that. The project is using 6.7.2 but I'm pretty sure it'd work with FontAwesome 7 aswell.
+
 # Acknowledgements
 Dancing letter gifs made by GIFs made by [ARG! Cartoon Animation](https://www.artiestick.com/), free to use on non-commercial pages that link to their website.
 
